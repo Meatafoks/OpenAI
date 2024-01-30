@@ -1,0 +1,6 @@
+config
+logs
+__tests__
+locale
+.idea
+*.iml

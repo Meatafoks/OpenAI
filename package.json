@@ -1,0 +1,44 @@
+{
+  "name": "@metafoks/openai",
+  "version": "1.0.0",
+  "description": "Metafoks telegram bot extension",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.(js|ts)\"",
+    "lint": "eslint src --fix --ext .js,.ts",
+    "testApp": "ts-node ./__tests__/app.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Meatafoks/OpenAI"
+  },
+  "author": "Yakov Foks <notafoks@yandex.ru>",
+  "license": "MIT",
+  "devDependencies": {
+    "@metafoks/eslint-config": "1.0.0",
+    "@metafoks/prettier": "1.0.0",
+    "@types/node": "^20.11.10",
+    "eslint": "8.56.0",
+    "prettier": "3.2.4",
+    "typescript": "^5.3.3"
+  },
+  "prettier": "@metafoks/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@metafoks/eslint-config"
+    ]
+  },
+  "dependencies": {
+    "@metafoks/app": "^1.0.8",
+    "@metafoks/utils": "^1.0.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.26.0"
+  }
+}
