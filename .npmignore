@@ -4,3 +4,4 @@ __tests__
 locale
 .idea
 *.iml
+test

@@ -5,6 +5,7 @@ import { createLogger, LoggerFactory } from '@metafoks/app';
 import { TaskComponent } from './task.component';
 
 export class ThreadComponent {
+    private static thisLogger = createLogger(ThreadComponent);
     private static threads: Record<string, ThreadComponent> = {};
 
     /**
@@ -12,7 +13,10 @@ export class ThreadComponent {
      * @param props
      */
     public static thread(props: { threadId: string; openai: OpenAI }) {
+        this.thisLogger.debug(`init new instance threadId=${props.threadId}`);
         if (!this.threads[props.threadId]) this.threads[props.threadId] = new ThreadComponent(props);
+
+        this.thisLogger.info('thread inited');
         return this.threads[props.threadId];
     }
 
@@ -21,7 +25,10 @@ export class ThreadComponent {
      * @param props
      */
     public static async create(props: { openai: OpenAI }) {
+        this.thisLogger.debug(`creating new thread`);
         const thread = await props.openai.beta.threads.create();
+
+        this.thisLogger.info(`new thread with id=${thread.id} created`);
         return this.thread({ threadId: thread.id, openai: props.openai });
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "@metafoks/openai",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Metafoks openai extension",
   "main": "lib/index.js",
   "files": [
@@ -10,7 +10,7 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.(js|ts)\"",
     "lint": "eslint src --fix --ext .js,.ts",
-    "testApp": "ts-node ./__tests__/app.ts"
+    "testApp": "ts-node test/app.ts"
   },
   "publishConfig": {
     "access": "public"
@@ -24,21 +24,59 @@
   "devDependencies": {
     "@metafoks/eslint-config": "1.0.0",
     "@metafoks/prettier": "1.0.0",
+    "@types/jest": "^29.5.11",
     "@types/node": "^20.11.10",
     "eslint": "8.56.0",
+    "eslint-plugin-jest": "^27.4.3",
+    "jest": "29.4.3",
     "prettier": "3.2.4",
+    "ts-jest": "29.0.5",
     "typescript": "^5.3.3"
   },
   "prettier": "@metafoks/prettier",
   "eslintConfig": {
+    "env": {
+      "jest": true
+    },
+    "plugins": [
+      "jest"
+    ],
     "extends": [
       "@metafoks/eslint-config"
     ]
   },
   "dependencies": {
-    "@metafoks/app": "^1.0.8",
+    "@metafoks/app": "^1.0.13",
     "@metafoks/utils": "^1.0.0",
     "node-fetch": "^3.3.2",
     "openai": "^4.26.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "html",
+      "json"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "<rootDir>/src/index.ts",
+      ".mock.ts"
+    ],
+    "coverageDirectory": "<rootDir>/coverage/",
+    "testRegex": "(/test/.*\\.(test|spec))\\.(jsx?|tsx?|ts|js)$",
+    "transform": {
+      "^.+\\.(t|j)sx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node",
+      "jsx",
+      "tsx"
+    ]
   }
 }

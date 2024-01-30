@@ -1,6 +1,6 @@
 *
-!__tests__/
-!__tests__/**/*
+!test/
+!test/**/*
 !src/
 !src/**/*
 !locale
