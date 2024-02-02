@@ -61,7 +61,10 @@ export class ThreadComponent {
         const { openai, threadId } = this.deps;
 
         this.logger.debug('creating new message');
-        return openai.beta.threads.messages.create(threadId, props.body);
+        const result = await openai.beta.threads.messages.create(threadId, props.body);
+
+        this.logger.info(`created new message`);
+        return result;
     }
 
     /**
@@ -80,9 +83,9 @@ export class ThreadComponent {
     public async addAssistant(props: { assistantId: string }) {
         const { assistantId } = props;
         this.logger.debug(`adding assistant=${assistantId}`);
-        const result = this.task({ body: { assistant_id: assistantId } });
+        const result = await this.task({ body: { assistant_id: assistantId } });
 
-        this.logger.info(`added assistant=${assistantId}`);
+        this.logger.info(`added assistant=${assistantId}, usage tokens=${result.source.usage?.total_tokens}`);
         return result;
     }
 

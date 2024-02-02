@@ -1,5 +1,5 @@
 import { OpenAI } from './openai.loader';
-import { ThreadComponent } from '../components/thread.component';
+import { ThreadComponent } from '../components';
 
 export default function (props: { openai: OpenAI }): OpenAIThreadLoader {
     return {
