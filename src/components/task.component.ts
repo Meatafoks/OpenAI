@@ -3,6 +3,7 @@ import { createLogger, LoggerFactory } from '@metafoks/app';
 import { isStatusIsWaiting, OpenAITaskRun } from '../dto';
 import { timeout } from '@metafoks/utils';
 import { OpenAI } from '../loaders';
+import { RunStep } from 'openai/src/resources/beta/threads/runs/steps';
 
 export class TaskComponent {
     private logger: ReturnType<typeof createLogger>;
@@ -31,7 +32,7 @@ export class TaskComponent {
      * Retrieves message
      * @param props
      */
-    public async retrieve(): Promise<OpenAITaskRun> {
+    public async retrieve(): Promise<Run> {
         const { threadId, runId } = this;
 
         this.logger.debug(`retrieving data...`);
@@ -43,9 +44,9 @@ export class TaskComponent {
      * @param props
      */
     public async waitForComplete(props: { onProcess?: () => void } = {}) {
-        const { runId } = this;
         const { onProcess } = props;
 
+        let lastRun: Run | undefined = undefined;
         let status: OpenAITaskRun['status'] = 'in_progress';
         let iteration = 1;
 
@@ -54,7 +55,7 @@ export class TaskComponent {
 
         const timeStart = new Date().getTime();
 
-        await timeout(900 * iteration);
+        await timeout(2000 * iteration);
         while (isStatusIsWaiting(status)) {
             this.logger.debug(`awaiting loop, it=${iteration}`);
 
@@ -62,17 +63,19 @@ export class TaskComponent {
             const run = await this.retrieve();
 
             status = run.status;
-            await timeout(900 * iteration);
+            lastRun = run;
+
+            await timeout(100 * iteration);
             iteration += 1;
 
             if (!isStatusIsWaiting(status)) {
                 const timeEnd = Math.round((((new Date().getTime() - timeStart) / 1000) * 100) / 100);
                 this.logger.info(
-                    `assistant=${run.assistant_id} (aka ${run.model}) successful solved task for ${timeEnd} seconds`,
+                    `assistant=${run.assistant_id} (aka ${run.model}) successful solved task for ${timeEnd} seconds, usage=${JSON.stringify(lastRun.usage)}`,
                 );
             }
         }
 
-        return true;
+        return lastRun;
     }
 }
