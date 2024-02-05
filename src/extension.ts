@@ -1,10 +1,10 @@
-import { LoggerFactory, MetafoksContext } from '@metafoks/app';
+import { createExtension, LoggerFactory, MetafoksContext } from '@metafoks/app';
 import OpenaiLoader from './loaders/openai.loader';
 import OpenAIThreadLoader from './loaders/openAIThread.loader';
 import { OpenAIVisionService, OpenAISpeechService, OpenAITranscriptionsService } from './services';
 import { OpenAIImageService } from './services/openAIImageService';
 
-export function openAIExtension(context: MetafoksContext) {
+export const openAIExtension = createExtension((context: MetafoksContext) => {
     const logger = LoggerFactory.createLoggerByName('OpenAIExtension');
     logger.level = context.getConfig().metafoks?.logger?.level?.app ?? 'INFO';
     logger.debug('start registration extension');
@@ -18,4 +18,8 @@ export function openAIExtension(context: MetafoksContext) {
     context.addClass('openAIImageService', OpenAIImageService);
 
     logger.info('extension registered');
-}
+
+    return {
+        identifier: 'ru.metafoks.extension.OpenAI',
+    };
+});

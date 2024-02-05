@@ -12,34 +12,19 @@ import * as fs from 'fs';
 import { OpenAIImageService } from '../src/services/openAIImageService';
 
 @MetafoksApplication({
-    with: [openAIExtension],
-})
-@InlineConfig<ConfigWithOpenAI>({
-    openai: {
-        organizationId: process.env.organization!,
-        token: process.env.token!,
-        vision: {
-            maxTokens: 500,
-            model: 'gpt-4-vision-preview',
-        },
-        speech: {
-            model: 'tts-1',
-            voice: 'nova',
-        },
-        transcriptions: {
-            model: 'whisper-1',
-        },
-        image: {
-            model: 'dall-e-2',
-        },
-    },
-    metafoks: {
-        logger: {
-            level: {
-                app: 'debug',
+    config: {
+        configPath: 'test/config',
+        overrides: {
+            openai: {
+                organizationId: process.env.organization!,
+                token: process.env.token!,
             },
         },
     },
+    logger: {
+        disableFileWriting: true,
+    },
+    with: [openAIExtension],
 })
 class Application {
     io = readline.createInterface({ input: process.stdin, output: process.stdout });
