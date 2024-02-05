@@ -20,7 +20,7 @@ export class OpenAITranscriptionsService {
 
     constructor(private deps: { openai: OpenAI; config: ConfigWithOpenAI }) {}
 
-    public async translate(props: TranslateProps): Promise<TranscriptionResult> {
+    public async transcript(props: TranslateProps): Promise<TranscriptionResult> {
         const { config, openai } = this.deps;
 
         if (!config.openai.transcriptions) {
@@ -40,15 +40,15 @@ export class OpenAITranscriptionsService {
         return result;
     }
 
-    public async translateByUrl(url: string, options: Omit<TranslateProps, 'file'> = {}) {
-        return this.translate({
+    public async transcriptByUrl(url: string, options: Omit<TranslateProps, 'file'> = {}) {
+        return this.transcript({
             ...options,
             file: await createFileByUrl(url),
         });
     }
 
-    public async translateByLocalPath(path: string, options: Omit<TranslateProps, 'file'> = {}) {
-        return this.translate({
+    public async transcriptByLocalPath(path: string, options: Omit<TranslateProps, 'file'> = {}) {
+        return this.transcript({
             ...options,
             file: await createFileByLocalPath(path),
         });
