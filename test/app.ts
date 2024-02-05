@@ -151,7 +151,7 @@ class Application {
     async testTranscriptions() {
         const { openAITranscriptionsService } = this.deps;
 
-        const result = await openAITranscriptionsService.translateByLocalPath('./test.oga');
+        const result = await openAITranscriptionsService.transcriptByLocalPath('./test.oga');
         console.log(result);
     }
 }

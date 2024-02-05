@@ -1,6 +1,8 @@
 import { toFile } from 'openai';
 import fs from 'fs';
 
+export * from './openAITiktokenUtils';
+
 export async function createFileByUrl(fileUrl: string) {
     const response = await fetch(fileUrl);
     const blob = await response.arrayBuffer();
