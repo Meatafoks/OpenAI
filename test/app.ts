@@ -1,7 +1,5 @@
-import { InlineConfig, MetafoksApplication } from '@metafoks/app';
+import { Logger, MetafoksApplication, Override } from '@metafoks/app';
 import {
-    ConfigWithOpenAI,
-    openAIExtension,
     OpenAISpeechService,
     OpenAIThreadLoader,
     OpenAITranscriptionsService,
@@ -11,21 +9,14 @@ import * as readline from 'readline';
 import * as fs from 'fs';
 import { OpenAIImageService } from '../src/services/openAIImageService';
 
-@MetafoksApplication({
-    config: {
-        configPath: 'test/config',
-        overrides: {
-            openai: {
-                organizationId: process.env.organization!,
-                token: process.env.token!,
-            },
-        },
+@MetafoksApplication
+@Override({
+    openai: {
+        organizationId: process.env.organization!,
+        token: process.env.token!,
     },
-    logger: {
-        disableFileWriting: true,
-    },
-    with: [openAIExtension],
 })
+@Logger({ disableFileWriting: true })
 class Application {
     io = readline.createInterface({ input: process.stdin, output: process.stdout });
 

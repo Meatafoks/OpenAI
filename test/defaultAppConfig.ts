@@ -17,11 +17,9 @@ export const defaultAppConfig = {
             model: 'dall-e-2',
         },
     },
-    metafoks: {
-        logger: {
-            level: {
-                app: 'debug',
-            },
+    logger: {
+        level: {
+            app: 'debug',
         },
     },
 };

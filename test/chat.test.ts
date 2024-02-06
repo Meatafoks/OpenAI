@@ -1,14 +1,15 @@
-import { MetafoksAbstractApplication } from '@metafoks/app';
 import { defaultAppConfig } from './defaultAppConfig';
 import { openAIExtension, OpenAIThreadLoader } from '../src';
+import { MetafoksAbstractContext } from '@metafoks/app/lib/testing/metafoksAbstractContext';
+import { createAbstractApplication } from '@metafoks/app';
 
 describe('chat testing', () => {
-    let app!: MetafoksAbstractApplication;
+    let app!: MetafoksAbstractContext;
 
     beforeAll(async () => {
-        app = await MetafoksAbstractApplication.createInstant({
+        app = await createAbstractApplication({
             config: defaultAppConfig,
-            with: [openAIExtension],
+            extensions: [openAIExtension],
         });
     });
 
