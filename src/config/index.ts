@@ -1,3 +1,8 @@
+export interface OpenAIBindingConfig {
+    chatServiceName?: string;
+    visionServiceName?: string;
+}
+
 export interface OpenAIVisionConfig {
     model: string;
     maxTokens: number;
@@ -23,6 +28,8 @@ export interface OpenAIConfig {
     speech?: OpenAISpeechConfig;
     transcriptions?: OpenAITranscriptionsConfig;
     image?: OpenAIImageConfig;
+
+    binding?: OpenAIBindingConfig;
 }
 
 export interface ConfigWithOpenAI {

@@ -1,4 +1,4 @@
-import { Logger, MetafoksApplication, Override } from '@metafoks/app';
+import { Logger, MetafoksApplication, Override, TestingApplication } from '@metafoks/app';
 import {
     OpenAISpeechService,
     OpenAIThreadLoader,
@@ -16,7 +16,7 @@ import { OpenAIImageService } from '../src/services/openAIImageService';
         token: process.env.token!,
     },
 })
-@Logger({ disableFileWriting: true })
+@TestingApplication
 class Application {
     io = readline.createInterface({ input: process.stdin, output: process.stdout });
 
